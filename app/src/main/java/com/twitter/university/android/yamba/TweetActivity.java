@@ -19,32 +19,6 @@ import android.widget.Toast;
 public class TweetActivity extends Activity {
     private static final String TAG = "TWEET";
 
-    private static class Poster extends AsyncTask<String, Void, Integer> {
-
-        private final Context ctxt;
-        public Poster(Context ctxt) {
-            this.ctxt = ctxt;
-        }
-
-        @Override
-        protected Integer doInBackground(String... tweet) {
-            String msg = tweet[0];
-
-            try { Thread.sleep(1000 * 10); }
-            catch (InterruptedException e) { }
-
-            return Integer.valueOf(R.string.tweet_success);
-        }
-
-        @Override
-        protected void onPostExecute(Integer status) {
-            Toast.makeText(ctxt, status.intValue(), Toast.LENGTH_LONG).show();
-            poster = null;
-        }
-    }
-
-    static Poster poster;
-
 
     private int okColor;
     private int warnColor;
@@ -93,12 +67,6 @@ public class TweetActivity extends Activity {
             } );
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        poster.cancel(true);
-    }
-
     void setCount() {
         int n = tweetView.getText().length();
 
@@ -116,15 +84,12 @@ public class TweetActivity extends Activity {
     }
 
     void post() {
-        if (null != poster) { return; }
-
         String tweet = tweetView.getText().toString();
         if (!checkTweetLen(tweet.length())) { return; }
 
         tweetView.setText("");
 
-        poster = new Poster(getApplicationContext());
-        poster.execute(tweet);
+        YambaService.post(this, tweet);
     }
 
     private boolean checkTweetLen(int n) {
