@@ -2,6 +2,7 @@ package com.twitter.university.android.yamba;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -89,7 +90,10 @@ public class TweetActivity extends Activity {
 
         tweetView.setText("");
 
-        YambaService.post(this, tweet);
+        Intent i = new Intent(YambaContract.Service.ACTION_EXECUTE);
+        i.putExtra(YambaContract.Service.PARAM_OP, YambaContract.Service.OP_POST);
+        i.putExtra(YambaContract.Service.PARAM_TWEET, tweet);
+        startService(i);
     }
 
     private boolean checkTweetLen(int n) {
