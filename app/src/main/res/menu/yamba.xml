@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/menu_tweet"
+            android:title="@string/title_tweet"
+            android:showAsAction="ifRoom|withText"
+            />
+    <item
+            android:id="@+id/menu_timeline"
+            android:title="@string/title_timeline"
+            android:showAsAction="ifRoom|withText"
+            />
+
+</menu>
